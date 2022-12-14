@@ -1,0 +1,48 @@
+To preprocess file:
+gcc -E file.c > file.p
+
+To get only macros:
+gcc -E -dM file.c > file.p
+
+To get assembler
+gcc -S -masm=intel main.c
+
+To compile file into object file
+gcc -c main.c
+
+To link all together
+gcc main.o -o main.out
+
+To make all steps in 1 (.c->.o and .o->.out)
+gcc main.c -o main.out
+
+To get linker script
+gcc main.c -Wl,-verbose -o main.out > linker_script.lds
+
+To link with custom script
+gcc main.c -Wl,-T linker_script.lds -o main.out
+
+nm options and syntax: https://linux.die.net/man/1/nm
+
+To get functions list from .o or .out file
+nm main.o
+
+To get size of functions from .o or .out file
+nm -S main.o
+
+objdump options and syntax https://man7.org/linux/man-pages/man1/objdump.1.html
+To get asm (code) from .o or .out file
+objdump -S main.o
+
+To get symbols (variables and functions) from .o or .out file
+objdump -t main.o
+
+To get dynamic (.so) symbols from .o or .out file
+objdump -T main.o
+
+To get all info from .o or .out file
+objdump -S main.o
+
+To check memory leaks using valgrind | sometimes valgrind cannot understand dwarf5
+gcc -ggdb3 -gdwarf-4 main.c -o main.out
+valgrind --leak-check=full --show-leak-kinds=all --track-origins=yes --error-exitcode=1 ./test.out
